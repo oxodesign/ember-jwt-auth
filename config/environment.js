@@ -13,10 +13,40 @@ module.exports = function(environment) {
       }
     },
 
+    contentSecurityPolicy : {
+      'default-src': "'self' *",
+      'script-src': "'self' * 'unsafe-inline' 'unsafe-eval' localhost:49152 0.0.0.0:49152",
+      'font-src': "'self' * https://fonts.googleapis.com",
+      'connect-src': "'self' * http://ornio.local",
+      'img-src': "'self' *",
+      'style-src': "'self' * 'unsafe-inline' 'unsafe-eval' localhost:49152 0.0.0.0:49152",
+      'media-src': "'self' *"
+    },
+
     APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
+      API_HOST: 'http://ornio.local/uwork-api/public',
+      API_NAMESPACE: 'api'
     }
+  };
+
+  // Ember Simple Auth configuration
+  ENV['ember-simple-auth'] = {
+    authorizer: 'authorizer:token',
+    crossOriginWhitelist: ['http://ornio.local'],
+    authenticationRoute: 'user.login',
+    //routeAfterAuthentication: 'protected',
+    //routeIfAlreadyAuthenticated: 'protected',
+    //baseURL: '/'
+  };
+
+  // Ember Simple Auth Token configuration
+  ENV['ember-simple-auth-token'] = {
+    serverTokenEndpoint: 'http://ornio.local/uwork-api/public/api/users/authenticate',
+    serverTokenRefreshEndpoint: 'http://ornio.local/uwork-api/public/api/users/refresh',
+    identificationField: 'email',
+    refreshAccessTokens: false,
+    timeFactor: 1,
+    refreshLeeway: 300
   };
 
   if (environment === 'development') {
